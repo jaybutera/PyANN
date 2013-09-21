@@ -21,7 +21,7 @@ class Node:
     def setDi(self, _di):
         self.di = _di
 
-    def addConnection(self, nbr, weight=0):
+    def addConnection(self, nbr, weight=0.):
         self.connectedTo[nbr] = weight
 
     def __str__(self):
