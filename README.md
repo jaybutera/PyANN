@@ -7,12 +7,12 @@ to help understand different kinds of learning and topological evolutionary
 algorithms for artificial neural networks.
 
 ###Methods of supervised learning:
-*Backpropagation
+- Backpropagation
 
 ###Goals:
--[ ]Support for both feed-forward and recurrent networks
--[ ]Browswer visualization of neural network in action
--[ ]Neuroevolution algorithm implementations
+- Support for both feed-forward and recurrent networks
+- Browswer visualization of neural network in action
+- Neuroevolution algorithm implementations
 
 ###Testing:
 To simplify the use of test functions, use nosetests (downloaded with pip or
