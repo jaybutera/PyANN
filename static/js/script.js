@@ -1,14 +1,17 @@
-$(document).ready(function(){
-    draw();
-});
+(function() {
+    var canvas = document.getElementById('canvas'),
+         context = canvas.getContext('2d');
 
-function draw() {  
-    ctx = document.createElement('ctx');
-    ctx.id     = "CursorLayer";
-    ctx.width  = window.innerWidth;
-    ctx.height = window.innerHeight;
-    ctx.style.zIndex   = 8;
-    ctx.style.position = "absolute";
-    ctx.style.border   = "1px solid";
-    document.body.appendChild(ctx);
-}
+    window.addEventListener('resize', resizeCanvas, false);
+
+    function resizeCanvas() {
+         canvas.width = window.innerWidth-300;
+         canvas.height = window.innerHeight;
+
+         drawStuff();
+    }
+    resizeCanvas();
+
+    function drawStuff() {
+    }
+})();
