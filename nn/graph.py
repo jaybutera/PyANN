@@ -1,11 +1,12 @@
 from node import *
+import json
 
 class Graph:
     def __init__(self):
         self.nodeList = {}
         self.numNode = 0
 
-    def addNode(self, key, kin='hidden', ix=0):
+    def add_node(self, key, kin='hidden', ix=0):
         """
         Adds a node of any type with no initial
         connections to the graph.
@@ -15,7 +16,7 @@ class Graph:
         self.nodeList[key] = newNode
         return newNode
 
-    def getNode(self, n):
+    def get_node(self, n):
         """
         Returns the instance of the specified
         node ID. If the node does not exist,
@@ -29,7 +30,7 @@ class Graph:
     def __contains__(self, n):
         return n in self.nodeList
 
-    def addEdge(self, a, b, weight=0):
+    def add_edge(self, a, b, weight=0):
         """
         Adds an undirected edge of a specified
         weight between node IDs a and b. If a
@@ -37,13 +38,13 @@ class Graph:
         prior to edge placement.
         """
         if a not in self.nodeList:
-            self.addNode(a)
+            self.add_node(a)
         if b not in self.nodeList:
-            self.addNode(b)
+            self.add_node(b)
 
         self.nodeList[a].addConnection(self.nodeList[b], weight)
 
-    def getNodes(self):
+    def get_nodes(self):
         """
         Returns a list of all node IDs that
         exist in the graph.
@@ -61,14 +62,14 @@ def graph_test():
     g = Graph()
 
     for i in range(6):
-        g.addNode(i)
+        g.add_node(i)
 
-    g.getNodes()
+    g.get_nodes()
 
-    g.addEdge(0,1,.3)
-    g.addEdge(1,3,.5)
-    g.addEdge(4,5,.1)
-    g.addEdge(2,4,.8)
+    g.add_edge(0,1,.3)
+    g.add_edge(1,3,.5)
+    g.add_edge(4,5,.1)
+    g.add_edge(2,4,.8)
 
     for v in g:
         for w in v.getConnections():
@@ -82,16 +83,23 @@ def activation_test():
     g = Graph()
 
     for i in range(3):
-        g.addNode(i, kin='input', ix = 2.)
+        g.add_node(i, kin='input', ix = 2.)
 
-    g.addNode(3)
-    g.addNode(4)
+    g.add_node(3)
+    g.add_node(4)
 
-    g.addEdge(3,0,weight=.3)
-    g.addEdge(4,0,weight=.6)
-    g.addEdge(3,1,weight=.7)
-    g.addEdge(3,2,weight=.4)
+    g.add_edge(3,0,weight=.3)
+    g.add_edge(4,0,weight=.6)
+    g.add_edge(3,1,weight=.7)
+    g.add_edge(3,2,weight=.4)
 
     print [node.activate() for node in g]
     print [node.dActivate() for node in g]
+
+class MyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if not isinstance(obj, Tree):
+            return super(MyEncoder, self).default(obj)
+
+        return obj.__dict__
 

@@ -3,37 +3,37 @@ import math
 class Node:
     def __init__(self, key, kind='hidden', i=0.):
         self.id = key
-        self.di = 0.
+        self.delta_i = 0.
         self.kind = kind
         if self.kind == 'input':
             self.val = i
         self.connectedTo = {}
 
-    def getChange(self, target=None):
+    def get_change(self, target=None):
         """
         Returns the change in weight values.
         """
         if self.kind == 'output':
             return (target-self.activate()) * self.dActivate()
         elif self.kind == 'hidden':
-            return self.dActivate() * sum([self.getWeight(i)*self.di for i in self.getConnections()])
+            return self.dActivate() * sum([self.get_weight(i)*self.delta_i for i in self.get_connections()])
 
-    def getDi(self):
+    def get_delta_i(self):
         """
         Returns the node's deltaI value from the
         previous weight update.
         """
-        return self.di
+        return self.delta_i
 
-    def setDi(self, _di):
+    def set_delta_i(self, delta_i):
         """
         Set the error of the node's output times
         the derivative of the activation function.
         Referred to as deltaI.
         """
-        self.di = _di
+        self.delta_i = delta_i
 
-    def addConnection(self, nbr, weight=0.):
+    def add_connection(self, nbr, weight=0.):
         """
         Connects a separate node instance of a specified
         weight (default 0.0) to the node.
@@ -44,27 +44,27 @@ class Node:
         return str(self.id) + ' connected to: ' + str([elem.id for elem in
             self.connectedTo])
 
-    def getConnections(self):
+    def get_connections(self):
         """
         Returns a list of all node instances
         that are connected to it.
         """
         return self.connectedTo.keys()
 
-    def getId(self):
+    def get_id(self):
         """
         Returns node ID.
         """
         return self.id
 
-    def getWeight(self, node):
+    def get_weight(self, node):
         """
         Returns the weight between itself
         and the specified node.
         """
         return self.connectedTo[node]
 
-    def setWeight(self, node, weight):
+    def set_weight(self, node, weight):
         """
         Sets the weight between itself
         and the specified node.
@@ -82,7 +82,7 @@ class Node:
     def activate(self):
         """
         Returns the value of the sum of connected
-        nodes' output values * the corresponding
+        nodes' output values * the correspondelta_ing
         weights fed into the sigmoid function.
         """
         if self.kind == 'input':
@@ -91,13 +91,13 @@ class Node:
             a=0
 
             for node in self.connectedTo.keys():
-                a += node.activate() * self.getWeight(node)
+                a += node.activate() * self.get_weight(node)
             return self.sigmoid(a)
         elif self.kind == 'output':
             a=0
 
             for node in self.connectedTo.keys():
-                a += node.activate() * self.getWeight(node)
+                a += node.activate() * self.get_weight(node)
             return a
         else:
             return None
