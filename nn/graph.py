@@ -23,7 +23,7 @@ class Graph:
         returns None.
         """
         if n in self.vertlist:
-            return self.verList[n]
+            return self.vertList[n]
         else:
             return None
 
@@ -42,7 +42,7 @@ class Graph:
         if b not in self.nodeList:
             self.add_node(b)
 
-        self.nodeList[a].addConnection(self.nodeList[b], weight)
+        self.nodeList[a].add_connection(self.nodeList[b], weight)
 
     def get_nodes(self):
         """
@@ -67,11 +67,11 @@ def graph_test():
     g.get_nodes()
 
     for x,y in ((0,1),(1,3),(4,5),(2,4)):
-        g.addEdge(x,y)
+        g.add_edge(x,y)
 
     for v in g:
-        for w in v.getConnections():
-            print("( %s , %s )" % (v.getId(), w.getId()))
+        for w in v.get_connections():
+            print("( %s , %s )" % (v.get_id(), w.get_id()))
 
 def activation_test():
     """
@@ -87,7 +87,7 @@ def activation_test():
     g.add_node(4)
 
     for x,y in ((3,0),(4,0),(3,1),(3,2)):
-        g.addEdge(x,y)
+        g.add_edge(x,y)
 
     print [node.activate() for node in g]
     print [node.dActivate() for node in g]

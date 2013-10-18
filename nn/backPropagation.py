@@ -6,11 +6,11 @@ from random import random
 # Evenutally merge these two update weight functions to work with both output
 # and hidden nodes.
 def updateOutputWeight(node, lower, targ, alpha):
-    node.set_weight(lower, node.getWeight(lower) + alpha * node.activate() * node.get_change(targ))
+    node.set_weight(lower, node.get_weight(lower) + alpha * node.activate() * node.get_change(targ))
 
-def updateHiddenWeight(node, lower, di, alpha):
-    node.setDi(di)
-    node.set_weight(lower, node.getWeight(lower) + alpha * node.activate() * node.get_change())
+def updateHiddenWeight(node, lower, delta_i, alpha):
+    node.set_delta_i(delta_i)
+    node.set_weight(lower, node.get_weight(lower) + alpha * node.activate() * node.get_change())
 
 """
 def run(filepath):
@@ -22,13 +22,13 @@ def run(filepath):
 
     for i in range(MAX):
         for ind in target:
-            for idx, outputWeight in enumerate(output.getConnections()):
-                di[idx] = output.get_change(ind[1])
+            for idx, outputWeight in enumerate(output.get_connections()):
+                delta_i[idx] = output.get_change(ind[1])
                 updateOutputWeight(output, outputWeight, ind[1], alpha)
 
             for idx, hiddenNode in enumerate(hidden):
-                for inputWeight in hiddenNode.getConnections():
-                    updateHiddenWeight(hiddenNode, inputWeight, di[idx], alpha)
+                for inputWeight in hiddenNode.get_connections():
+                    updateHiddenWeight(hiddenNode, inputWeight, delta_i[idx], alpha)
 """
 
 def backProp_test():
@@ -37,7 +37,7 @@ def backProp_test():
     """
 
     # Interestingly, the NN convergers when the value is under 1. However,
-    # occasionaly it will diverge and appproach positive or negative infinity.
+    # occasionaly it will delta_iverge and appproach positive or negative infinity.
 
     g = Graph()
     outputs = []
@@ -51,34 +51,30 @@ def backProp_test():
 
     # To hidden
     for x,y in ((3,0),(4,0),(4,1),(4,2),(3,1),(3,2)):
-        g.addEdge(x,y)
+        g.add_edge(x,y)
 
     # To output
     #for x,y in ((5,3),(5,4)):
-    #    g.addEdge(x,y)
-    g.addEdge(5,3,weight=round(random(),2))
-    g.addEdge(5,4,weight=round(random(),2))
+    #    g.add_edge(x,y)
+    g.add_edge(5,3,weight=round(random(),2))
+    g.add_edge(5,4,weight=round(random(),2))
 
-    di = [0 for i in range(len(hidden))]
+    delta_i = [0 for i in hidden]
 
-  for i in range(MAX):
+    for i in range(MAX):
         for ind in target:
-            for idx, outputWeight in enumerate(output.getConnections()):
-                di[idx] = output.get_change(ind[0])
+            for idx, outputWeight in enumerate(output.get_connections()):
+                delta_i[idx] = output.get_change(ind[0])
                 updateOutputWeight(output, outputWeight, ind[0], alpha)
 
             for idx, hiddenNode in enumerate(hidden):
-                for inputWeight in hiddenNode.getConnections():
-                    updateHiddenWeight(hiddenNode, inputWeight, di[idx], alpha)
+                for inputWeight in hiddenNode.get_connections():
+                    updateHiddenWeight(hiddenNode, inputWeight, delta_i[idx], alpha)
 
-            # print 'output:', output.activate()
             outputs.append(output.activate())
-            plt.plot(range(MAX), outputs, 'b-')
-            del outputs[:]
-
 
     # Plot information
-    plt.figure(1)
+    plt.figure(0)
     plt.clf()
     plt.title('ANN Output Value Evolution')
     plt.ylabel('Output value')
@@ -86,14 +82,16 @@ def backProp_test():
     plt.ylim(0,4)
 
     # Plot the target value line (trend should converge here)
-    # plt.axhline(target, color='r')
-    points = [i for i[0] in target]
-    targs = [i for i[1] in target]
-    print 'targs: ' + len(targs)
-    print 'points: ' + len(points)
+    points = [i[0] for i in target]
+    targs = [i[1] for i in target]
+    #print 'targs: ' + len(targs)
+    #print 'points: ' + len(points)
 
     # Plot the output node at each epoch
-    plt.plot(range(MAX), outputs, 'b-')
+    plt.plot(range(len(target)*MAX), outputs, 'b-')
+    plt.plot([999,1999,2999], targs, 'ro')
 
-     #plt.plot(points, targs, 'ro')
+    # Use this once graphing an unsupervised learning environment
+    # plt.plot(points, targs, 'ro')
+    plt.show()
 
