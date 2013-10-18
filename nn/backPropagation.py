@@ -30,14 +30,12 @@ def backProp_test():
     output = g.addNode(5, kin='output')
 
     # To hidden
-    g.addEdge(3,0,weight=round(random(),2))
-    g.addEdge(4,0,weight=round(random(),2))
-    g.addEdge(4,1,weight=round(random(),2))
-    g.addEdge(4,2,weight=round(random(),2))
-    g.addEdge(3,1,weight=round(random(),2))
-    g.addEdge(3,2,weight=round(random(),2))
+    for x,y in ((3,0),(4,0),(4,1),(4,2),(3,1),(3,2)):
+        g.addEdge(x,y)
 
     # To output
+    #for x,y in ((5,3),(5,4)):
+    #    g.addEdge(x,y)
     g.addEdge(5,3,weight=round(random(),2))
     g.addEdge(5,4,weight=round(random(),2))
 

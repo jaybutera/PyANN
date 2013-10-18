@@ -65,10 +65,8 @@ def graph_test():
 
     g.getNodes()
 
-    g.addEdge(0,1,.3)
-    g.addEdge(1,3,.5)
-    g.addEdge(4,5,.1)
-    g.addEdge(2,4,.8)
+    for x,y in ((0,1),(1,3),(4,5),(2,4)):
+        g.addEdge(x,y)
 
     for v in g:
         for w in v.getConnections():
@@ -87,11 +85,8 @@ def activation_test():
     g.addNode(3)
     g.addNode(4)
 
-    g.addEdge(3,0,weight=.3)
-    g.addEdge(4,0,weight=.6)
-    g.addEdge(3,1,weight=.7)
-    g.addEdge(3,2,weight=.4)
+    for x,y in ((3,0),(4,0),(3,1),(3,2)):
+        g.addEdge(x,y)
 
     print [node.activate() for node in g]
     print [node.dActivate() for node in g]
-
