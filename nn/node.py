@@ -1,4 +1,5 @@
 import math
+from random import random
 
 class Node:
     def __init__(self, key, kind='hidden', i=0.):
@@ -33,7 +34,7 @@ class Node:
         """
         self.di = _di
 
-    def addConnection(self, nbr, weight=0.):
+    def addConnection(self, nbr, weight=round(random(),2)):
         """
         Connects a separate node instance of a specified
         weight (default 0.0) to the node.
