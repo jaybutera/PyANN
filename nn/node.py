@@ -3,24 +3,16 @@ from random import random
 
 class Node:
     def __init__(self, key, kind='hidden', i=0.):
-        """
         raise NotImplementedError()
-        """
-        self.key = key
-        self.delta_i = 0.
-        self.kind = kind
-        if self.kind == 'input':
-            self.val = i
-        self.connectedTo = {}
 
+    """
     def get_change(self, target=None):
-        """
         Returns the change in weight values.
-        """
         if self.kind == 'output':
             return (target-self.activate()) * self.dActivate()
         elif self.kind == 'hidden':
             return self.dActivate() * sum([self.get_weight(i)*self.delta_i for i in self.get_connections()])
+    """
 
     # Deprecate
     def get_delta_i(self):
@@ -86,12 +78,11 @@ class Node:
         """
         return (1/(1+math.exp(-a)))
 
+    """
     def activate(self):
-        """
         Returns the value of the sum of connected
         nodes' output values * the correspondelta_ing
         weights fed into the sigmoid function.
-        """
         if self.kind == 'input':
             return self.val
         elif self.kind == 'hidden':
@@ -110,21 +101,20 @@ class Node:
             return None
 
     def dActivate(self):
-        """
         Returns the derivative of the activation
         function. If the node is of type input,
         the value remains the same.
-        """
         if self.kind== 'input':
             return self.val
         else:
             x = self.activate()
             return (x * (1-x))
+     """
 
 class InputNode(Node):
-    def __init__(self, key, i=0.):
+    def __init__(self, key, i_val=0.):
         self.key = key
-        self.val = i
+        self.val = i_val
         self.connectedTo = {}
 
     def activate(self):
@@ -132,3 +122,42 @@ class InputNode(Node):
 
     def dActivate(self):
         return self.val
+
+class HiddenNode(Node):
+    def __init__(self, key):
+        self.key = key
+        self.connectedTo = {}
+
+    def get_change(self, target=None):
+        return self.dActivate() * sum([self.get_weight(i)*self.delta_i for i in self.get_connections()])
+
+    def activate(self):
+        a=0
+
+        for node in self.connectedTo.keys():
+            a += node.activate() * self.get_weight(node)
+        return self.sigmoid(a)
+
+    def dActivate(self):
+        x = self.activate()
+        return (x * (1-x))
+
+class OutputNode(Node):
+    def __init__(self, key):
+        self.key = key
+        self.connectedTo = {}
+
+    def get_change(self, target=None):
+        return (target-self.activate()) * self.dActivate()
+
+    def activate(self):
+        a=0
+
+        for node in self.connectedTo.keys():
+            a += node.activate() * self.get_weight(node)
+        return a
+
+    def dActivate(self):
+        x = self.activate()
+        return (x * (1-x))
+
