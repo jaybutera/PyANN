@@ -3,7 +3,10 @@ from random import random
 
 class Node:
     def __init__(self, key, kind='hidden', i=0.):
-        self.id = key
+        """
+        raise NotImplementedError()
+        """
+        self.key = key
         self.delta_i = 0.
         self.kind = kind
         if self.kind == 'input':
@@ -19,6 +22,7 @@ class Node:
         elif self.kind == 'hidden':
             return self.dActivate() * sum([self.get_weight(i)*self.delta_i for i in self.get_connections()])
 
+    # Deprecate
     def get_delta_i(self):
         """
         Returns the node's deltaI value from the
@@ -26,6 +30,7 @@ class Node:
         """
         return self.delta_i
 
+    # Deprecate
     def set_delta_i(self, delta_i):
         """
         Set the error of the node's output times
@@ -42,7 +47,7 @@ class Node:
         self.connectedTo[nbr] = weight
 
     def __str__(self):
-        return str(self.id) + ' connected to: ' + str([elem.id for elem in
+        return str(self.key) + ' connected to: ' + str([elem.key for elem in
             self.connectedTo])
 
     def get_connections(self):
@@ -52,11 +57,12 @@ class Node:
         """
         return self.connectedTo.keys()
 
+    # Deprecate
     def get_id(self):
         """
         Returns node ID.
         """
-        return self.id
+        return self.key
 
     def get_weight(self, node):
         """
@@ -115,3 +121,14 @@ class Node:
             x = self.activate()
             return (x * (1-x))
 
+class InputNode(Node):
+    def __init__(self, key, i=0.):
+        self.key = key
+        self.val = i
+        self.connectedTo = {}
+
+    def activate(self):
+        return self.val
+
+    def dActivate(self):
+        return self.val
