@@ -54,10 +54,8 @@ def backProp_test():
         g.add_edge(x,y)
 
     # To output
-    #for x,y in ((5,3),(5,4)):
-    #    g.add_edge(x,y)
-    g.add_edge(5,3,weight=round(random(),2))
-    g.add_edge(5,4,weight=round(random(),2))
+    for x,y in ((5,3),(5,4)):
+        g.add_edge(x,y)
 
     delta_i = [0 for i in hidden]
 
@@ -79,7 +77,7 @@ def backProp_test():
     plt.title('ANN Output Value Evolution')
     plt.ylabel('Output value')
     plt.xlabel('Epoch')
-    plt.ylim(0,4)
+    plt.ylim(-2,2)
 
     # Plot the target value line (trend should converge here)
     points = [i[0] for i in target]
