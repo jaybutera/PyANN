@@ -1,5 +1,6 @@
 import json
 from graph import *
+from node import *
 import matplotlib.pyplot as plt
 from random import random
 
@@ -36,18 +37,16 @@ def backProp_test():
     Tests the back propagation algorithm with an arbitrary data set
     """
 
-    # Interestingly, the NN convergers when the value is under 1. However,
-    # occasionaly it will delta_iverge and appproach positive or negative infinity.
-
     g = Graph()
     outputs = []
     target = [(0.0,0.0),(math.pi,1.0),(3*math.pi/2,-1.0)]
     alpha = .01
     MAX = 1000
 
-    inputs = [g.add_node(i, kin='input', ix = float(i+1)) for i in range(3)]
-    hidden = [g.add_node(i) for i in range(3,5)]
-    output = g.add_node(5, kin='output')
+    #inputs = [g.add_node(i, kin='input', ix = float(i+1)) for i in range(3)]
+    inputs = [g.add_input_node(i,float(i+1)) for i in range(3)]
+    hidden = [g.add_hidden_node(i) for i in range(3,5)]
+    output = g.add_output_node(5)
 
     # To hidden
     for x,y in ((3,0),(4,0),(4,1),(4,2),(3,1),(3,2)):
