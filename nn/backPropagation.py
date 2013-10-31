@@ -23,13 +23,13 @@ def run(filepath):
 
     for i in range(MAX):
         for ind in target:
-            for idx, outputWeight in enumerate(output.get_connections()):
+            for idx, output_weight in enumerate(output.get_connections()):
                 delta_i[idx] = output.get_change(ind[1])
-                updateOutputWeight(output, outputWeight, ind[1], alpha)
+                updateOutputWeight(output, output_weight, ind[1], alpha)
 
-            for idx, hiddenNode in enumerate(hidden):
-                for inputWeight in hiddenNode.get_connections():
-                    updateHiddenWeight(hiddenNode, inputWeight, delta_i[idx], alpha)
+            for idx, hidden_node in enumerate(hidden):
+                for inputWeight in hidden_node.get_connections():
+                    updateHiddenWeight(hidden_node, inputWeight, delta_i[idx], alpha)
 """
 
 def backProp_test():
@@ -56,17 +56,16 @@ def backProp_test():
     for x,y in ((5,3),(5,4)):
         g.add_edge(x,y)
 
-    delta_i = [0 for i in hidden]
-
     for i in range(MAX):
         for ind in target:
-            for idx, outputWeight in enumerate(output.get_connections()):
-                delta_i[idx] = output.get_change(ind[0])
-                updateOutputWeight(output, outputWeight, ind[0], alpha)
+            for idx, output_weight in enumerate(output.get_connections()):
+                output.delta_i = output.get_change(ind[0])
+                output.update_weight(output_weight, ind[0], alpha)
 
-            for idx, hiddenNode in enumerate(hidden):
-                for inputWeight in hiddenNode.get_connections():
-                    updateHiddenWeight(hiddenNode, inputWeight, delta_i[idx], alpha)
+            for idx, hidden_node in enumerate(hidden):
+                for inputWeight in hidden_node.get_connections():
+                    hidden_node.update_weight(inputWeight,
+                            hidden_node.delta_i, alpha)
 
             outputs.append(output.activate())
 
