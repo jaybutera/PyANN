@@ -5,23 +5,6 @@ class Node(object):
     def __init__(self):
         raise NotImplementedError()
 
-    # Deprecate
-    def get_delta_i(self):
-        """
-        Returns the node's deltaI value from the
-        previous weight update.
-        """
-        return self.delta_i
-
-    # Deprecate
-    def set_delta_i(self, delta_i):
-        """
-        Set the error of the node's output times
-        the derivative of the activation function.
-        Referred to as deltaI.
-        """
-        self.delta_i = delta_i
-
     def add_connection(self, nbr, weight=round(random(),2)):
         """
         Connects a separate node instance of a specified
