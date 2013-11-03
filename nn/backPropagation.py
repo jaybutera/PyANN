@@ -4,34 +4,6 @@ from node import *
 import matplotlib.pyplot as plt
 from random import random
 
-# Evenutally merge these two update weight functions to work with both output
-# and hidden nodes.
-def updateOutputWeight(node, lower, targ, alpha):
-    node.set_weight(lower, node.get_weight(lower) + alpha * node.activate() * node.get_change(targ))
-
-def updateHiddenWeight(node, lower, delta_i, alpha):
-    node.set_delta_i(delta_i)
-    node.set_weight(lower, node.get_weight(lower) + alpha * node.activate() * node.get_change())
-
-"""
-def run(filepath):
-    ""
-    Runs a specified network via JSON with
-    a specified number of epochs.
-    ""
-    g = Graph()
-
-    for i in range(MAX):
-        for ind in target:
-            for idx, output_weight in enumerate(output.get_connections()):
-                delta_i[idx] = output.get_change(ind[1])
-                updateOutputWeight(output, output_weight, ind[1], alpha)
-
-            for idx, hidden_node in enumerate(hidden):
-                for inputWeight in hidden_node.get_connections():
-                    updateHiddenWeight(hidden_node, inputWeight, delta_i[idx], alpha)
-"""
-
 def backProp_test():
     """
     Tests the back propagation algorithm with an arbitrary data set
@@ -56,17 +28,22 @@ def backProp_test():
     for x,y in ((5,3),(5,4)):
         g.add_edge(x,y)
 
+    # Perform backpropagation through MAX epochs
     for i in range(MAX):
+        # Iterate through all training set points in target
         for ind in target:
+            # Calculate and modify output layer values
             for idx, output_weight in enumerate(output.get_connections()):
                 output.delta_i = output.get_change(ind[0])
                 output.update_weight(output_weight, ind[0], alpha)
 
+            # Calculate and modify hidden layer values
             for idx, hidden_node in enumerate(hidden):
                 for inputWeight in hidden_node.get_connections():
                     hidden_node.update_weight(inputWeight,
                             hidden_node.delta_i, alpha)
 
+            # Accumulate output node values of every cycle
             outputs.append(output.activate())
 
     # Plot information
@@ -83,7 +60,7 @@ def backProp_test():
     #print 'targs: ' + len(targs)
     #print 'points: ' + len(points)
 
-    # Plot the output node at each epoch
+    # Plot the output node at each cycle
     plt.plot(range(len(target)*MAX), outputs, 'b-')
     plt.plot([999,1999,2999], targs, 'ro')
 
