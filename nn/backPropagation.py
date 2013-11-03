@@ -12,7 +12,8 @@ def backProp_test():
     g = Graph()
     outputs = []
     target = [(0.0,0.0),(math.pi,1.0),(3*math.pi/2,-1.0)]
-    alpha = .01
+    x_target = [point[0] for point in target]
+    alpha = (max(x_target) - min(x_target))/len(target)
     MAX = 1000
 
     #inputs = [g.add_node(i, kin='input', ix = float(i+1)) for i in range(3)]
