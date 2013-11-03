@@ -85,7 +85,7 @@ class HiddenNode(Node):
 
     def update_weight(self,lower,delta_i,alpha):
         self.delta_i = delta_i
-        self.set_weight(lower, get_weight(lower) + alpha * self.activate *
+        self.set_weight(lower, self.get_weight(lower) + alpha * self.activate() *
                 self.get_change())
 
     def activate(self):
