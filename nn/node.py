@@ -19,7 +19,7 @@ class Node(object):
         """
         self.connectedTo[node] = weight
 
-    def add_connection(self, nbr, weight=round(random(),2)):
+    def add_connection(self, nbr, weight=round(random(), 2)):
         """
         Connects a separate node instance of a specified
         weight (default random) to the node.
@@ -66,7 +66,7 @@ class HiddenNode(Node):
     def get_change(self):
         return self.dActivate() * sum([self.get_weight(i)*self.delta_i for i in self.get_connections()])
 
-    def update_weight(self,lower,delta_i,alpha):
+    def update_weight(self, lower, delta_i, alpha):
         self.delta_i = delta_i
         self.set_weight(lower, self.get_weight(lower) + alpha * self.activate() *
                 self.get_change())

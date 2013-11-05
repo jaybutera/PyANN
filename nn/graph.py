@@ -41,6 +41,7 @@ class Graph:
         node ID. If the node does not exist,
         returns None.
         """
+
         if n in self.vertlist:
             return self.vertList[n]
         else:
@@ -49,7 +50,7 @@ class Graph:
     def __contains__(self, n):
         return n in self.node_dict
 
-    def add_edge(self, a, b, weight=round(random(),2)):
+    def add_edge(self, a, b, weight=round(random(), 2)):
         """
         Adds an undirected edge of a specified
         weight between node IDs a and b. If a
@@ -62,7 +63,7 @@ class Graph:
 
         if a < b:
             print 'connection should be directed backward, not forward'
-            self.add_edge(b,a,weight)
+            self.add_edge(b, a, weight)
 
         if a not in self.node_dict:
             if t == InputNode:

@@ -10,23 +10,23 @@ def backProp_test():
 
     g = Graph()
     outputs = []
-    target = [(0.0,0.0),(math.pi/2,1.0),(math.pi,0),(3*math.pi/2,-1.0),(2*math.pi,0)]
+    target = [(0.0, 0.0),(math.pi/2, 1.0), (math.pi, 0.0), (3*math.pi/2, -1.0), (2*math.pi, 0)]
     x_target = [point[0] for point in target]
     y_target = [i[1] for i in target]
     alpha = (max(x_target) - min(x_target))/len(target)
     MAX = 1
 
-    inputs = [g.add_input_node(i,float(i+1)) for i in range(3)]
-    hidden = [g.add_hidden_node(i) for i in range(3,5)]
+    inputs = [g.add_input_node(i, float(i+1)) for i in range(3)]
+    hidden = [g.add_hidden_node(i) for i in range(3, 5)]
     output = g.add_output_node(5)
 
     # To hidden
-    for x,y in ((3,0),(4,0),(4,1),(4,2),(3,1),(3,2)):
+    for x, y in ((3, 0), (4, 0), (4, 1), (4, 2), (3, 1), (3, 2)):
         g.add_edge(x,y)
 
     # To output
-    for x,y in ((5,3),(5,4)):
-        g.add_edge(x,y)
+    for x, y in ((5, 3), (5, 4)):
+        g.add_edge(x, y)
 
     # Perform backpropagation through MAX epochs
     for i in range(MAX):
@@ -53,7 +53,7 @@ def backProp_test():
     plt.title('ANN Output Value Evolution')
     plt.ylabel('Output value')
     plt.xlabel('Epoch')
-    plt.ylim(-2,2)
+    plt.ylim(-2, 2)
 
     # Plot the target value line (trend should converge here)
     plt.plot(x_target, y_target, 'ro')
