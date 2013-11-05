@@ -5,24 +5,6 @@ class Node(object):
     def __init__(self):
         raise NotImplementedError()
 
-    def add_connection(self, nbr, weight=round(random(),2)):
-        """
-        Connects a separate node instance of a specified
-        weight (default 0.0) to the node.
-        """
-        self.connectedTo[nbr] = weight
-
-    def __str__(self):
-        return str(self.key) + ' connected to: ' + str([elem.key for elem in
-            self.connectedTo])
-
-    def get_connections(self):
-        """
-        Returns a list of all node instances
-        that are connected to it.
-        """
-        return self.connectedTo.keys()
-
     def get_weight(self, node):
         """
         Returns the weight between itself
@@ -36,6 +18,24 @@ class Node(object):
         and the specified node.
         """
         self.connectedTo[node] = weight
+
+    def add_connection(self, nbr, weight=round(random(),2)):
+        """
+        Connects a separate node instance of a specified
+        weight (default random) to the node.
+        """
+        self.connectedTo[nbr] = weight
+
+    def __str__(self):
+        return str(self.key) + ' connected to: ' + str([elem.key for elem in
+            self.connectedTo])
+
+    def get_connections(self):
+        """
+        Returns a list of all node instances
+        that are connected to it.
+        """
+        return self.connectedTo.keys()
 
     def sigmoid(self, a):
         """
@@ -63,7 +63,7 @@ class HiddenNode(Node):
         self.connectedTo = {}
         self.delta_i = 0.
 
-    def get_change(self, target=None):
+    def get_change(self):
         return self.dActivate() * sum([self.get_weight(i)*self.delta_i for i in self.get_connections()])
 
     def update_weight(self,lower,delta_i,alpha):
@@ -88,7 +88,7 @@ class OutputNode(Node):
         self.connectedTo = {}
         self.delta_i = 0.
 
-    def get_change(self, target=None):
+    def get_change(self, target):
         return (target-self.activate()) * self.dActivate()
 
     def update_weight(self, lower, target, alpha):
