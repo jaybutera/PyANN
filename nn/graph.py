@@ -1,12 +1,11 @@
 from node import *
-import json
 
 class Graph:
     def __init__(self):
         self.node_dict = {}
         self.numNode = 0
 
-    def add_input_node(self, key, i_val=0):
+    def add_input_node(self, key, i_val=0.):
         """
         Adds an input node with no initial
         connections to the graph.
@@ -50,7 +49,7 @@ class Graph:
     def __contains__(self, n):
         return n in self.node_dict
 
-    def add_edge(self, a, b, weight=0):
+    def add_edge(self, a, b, weight=round(random(),2)):
         """
         Adds an undirected edge of a specified
         weight between node IDs a and b. If a
@@ -59,14 +58,30 @@ class Graph:
         a backward directed connectivity scheme.
         """
 
+        t=type(a)
+
         if a < b:
             print 'connection should be directed backward, not forward'
             self.add_edge(b,a,weight)
 
         if a not in self.node_dict:
-            self.add_node(a)
+            if t == InputNode:
+                self.add_input_node(a)
+            elif t == HiddenNode:
+                self.add_hidden_node(a)
+            elif t == OutputNode:
+                self.add_output_node(a)
+            else:
+                raise TypeError
         if b not in self.node_dict:
-            self.add_node(b)
+            if t == InputNode:
+                self.add_input_node(a)
+            elif t == HiddenNode:
+                self.add_hidden_node(a)
+            elif t == OutputNode:
+                self.add_output_node(a)
+            else:
+                raise TypeError
 
         self.node_dict[a].add_connection(self.node_dict[b], weight)
 
