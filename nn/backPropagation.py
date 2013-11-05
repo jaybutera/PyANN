@@ -1,4 +1,3 @@
-import json
 from graph import *
 from node import *
 import matplotlib.pyplot as plt
@@ -11,12 +10,12 @@ def backProp_test():
 
     g = Graph()
     outputs = []
-    target = [(0.0,0.0),(math.pi,1.0),(3*math.pi/2,-1.0)]
+    target = [(0.0,0.0),(math.pi/2,1.0),(math.pi,0),(3*math.pi/2,-1.0),(2*math.pi,0)]
     x_target = [point[0] for point in target]
+    y_target = [i[1] for i in target]
     alpha = (max(x_target) - min(x_target))/len(target)
-    MAX = 1000
+    MAX = 1
 
-    #inputs = [g.add_node(i, kin='input', ix = float(i+1)) for i in range(3)]
     inputs = [g.add_input_node(i,float(i+1)) for i in range(3)]
     hidden = [g.add_hidden_node(i) for i in range(3,5)]
     output = g.add_output_node(5)
@@ -32,6 +31,7 @@ def backProp_test():
     # Perform backpropagation through MAX epochs
     for i in range(MAX):
         # Iterate through all training set points in target
+        outputs = []
         for ind in target:
             # Calculate and modify output layer values
             for idx, output_weight in enumerate(output.get_connections()):
@@ -56,16 +56,10 @@ def backProp_test():
     plt.ylim(-2,2)
 
     # Plot the target value line (trend should converge here)
-    points = [i[0] for i in target]
-    targs = [i[1] for i in target]
-    #print 'targs: ' + len(targs)
-    #print 'points: ' + len(points)
+    plt.plot(x_target, y_target, 'ro')
 
     # Plot the output node at each cycle
-    plt.plot(range(len(target)*MAX), outputs, 'b-')
-    plt.plot([999,1999,2999], targs, 'ro')
+    plt.plot(x_target, outputs, 'b-')
 
     # Use this once graphing an unsupervised learning environment
-    # plt.plot(points, targs, 'ro')
     plt.show()
-
