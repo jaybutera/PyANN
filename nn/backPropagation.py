@@ -1,7 +1,8 @@
 from graph import *
-from node import *
+from node import * # Eventually only interface to nodes through graph
 import matplotlib.pyplot as plt
 from random import random
+from fileToMatrix import get_data
 
 def backProp_test():
     """
@@ -10,9 +11,11 @@ def backProp_test():
 
     g = Graph()
     outputs = []
-    target = [(0.0, 0.0),(math.pi/2, 1.0), (math.pi, 0.0), (3*math.pi/2, -1.0), (2*math.pi, 0)]
+    #target = [(0.0, 0.0),(math.pi/2, 1.0), (math.pi, 0.0), (3*math.pi/2, -1.0), (2*math.pi, 0)]
+    # Modify filepath
+    target = get_data('/Users/jaybutera/Documents/Programming/PyANN/datasets/fmtrain.dat')
     x_target = [point[0] for point in target]
-    y_target = [i[1] for i in target]
+    y_target = [i[2] for i in target]
     alpha = (max(x_target) - min(x_target))/len(target)
     MAX = 1
 
