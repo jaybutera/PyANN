@@ -16,16 +16,16 @@ def backProp_test():
     alpha = (max(x_target) - min(x_target))/len(target)
     MAX = 1
 
-    inputs = [g.add_input_node(i, float(i+1)) for i in range(3)]
-    hidden = [g.add_hidden_node(i) for i in range(3, 5)]
-    output = g.add_output_node(5)
+    inputs = g.add_input_node(0)
+    hidden = [g.add_hidden_node(i) for i in range(1, 3)]
+    output = g.add_output_node(3)
 
     # To hidden
-    for x, y in ((3, 0), (4, 0), (4, 1), (4, 2), (3, 1), (3, 2)):
+    for x, y in ((1,0), (2,0)):
         g.add_edge(x,y)
 
     # To output
-    for x, y in ((5, 3), (5, 4)):
+    for x, y in ((3, 1), (3, 2)):
         g.add_edge(x, y)
 
     # Perform backpropagation through MAX epochs
@@ -33,6 +33,8 @@ def backProp_test():
         # Iterate through all training set points in target
         outputs = []
         for ind in target:
+            # Update input nodes
+            inputs.val = ind[0]
             # Calculate and modify output layer values
             for idx, output_weight in enumerate(output.get_connections()):
                 output.delta_i = output.get_change(ind[0])
