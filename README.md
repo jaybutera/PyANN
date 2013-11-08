@@ -2,8 +2,8 @@ PyANN
 =====
 
 An execution of a generic artificial neural network written in Python2.7.
-Analytics are done in matplotlib. The goal of the project is 
-to help understand the process of learning through continous epochs in 
+Analytics plotting is done in d3.js. The goal of the project is
+to help understand the process of learning through continous epochs in
 an artificial neural network.
 
 ###Methods of supervised learning:
@@ -11,9 +11,9 @@ an artificial neural network.
 
 ###Goals:
 - Support for both feed-forward and recurrent networks
-- Browswer visualization of neural network in action
+- Browswr visualization of neural network topology and learning ouptput in action
 - Neuroevolution algorithm implementations
-- Network encoded with JSON
+- Access state vector at any point (pickled)
 
 ###Dependencies
 - Matplotlib
