@@ -1,4 +1,5 @@
 from layer import *
+from backPropagation import *
 
 class Graph:
     def __init__(self):
@@ -20,99 +21,26 @@ class Graph:
         new_layer = OutputLayer(num)
         self.layer_dict[new_layer.key] = new_layer
 
-'''
-    def __init__(self):
-        self.node_dict = {}
-        self.numNode = 0
+g = Graph()
+outputs = []
+#target = [(0.0, 0.0),(math.pi/2, 1.0), (math.pi, 0.0), (3*math.pi/2, -1.0), (2*math.pi, 0)]
+# Modify filepath
+#target = get_data('/Users/jaybutera/Documents/Programming/PyANN/datasets/fmtrain.dat')
+target = [(x,0) for x in range(-50,50)]
+MAX = 1
 
-    def add_input_node(self, key, i_val=0.):
-        """
-        Adds an input node with no initial
-        connections to the graph.
-        """
-        self.numNode = self.numNode + 1
-        newNode = InputNode(key, i_val)
-        self.node_dict[key] = newNode
-        return newNode
+inputs = g.add_input_node(0)
+#hidden = [g.add_hidden_node(i) for i in range(1, 3)]
+output = g.add_output_node(3)
 
-    def add_hidden_node(self, key):
-        """
-        Adds an hidden node with no initial
-        connections to the graph.
-        """
-        self.numNode = self.numNode + 1
-        newNode = HiddenNode(key)
-        self.node_dict[key] = newNode
-        return newNode
+# To hidden
+#for x, y in ((1,0), (2,0)):
+#    g.add_edge(x,y)
 
-    def add_output_node(self, key):
-        """
-        Adds an output node with no initial
-        connections to the graph.
-        """
-        self.numNode = self.numNode + 1
-        newNode = OutputNode(key)
-        self.node_dict[key] = newNode
-        return newNode
+# To output
+#for x, y in ((3, 1), (3, 2)):
+#    g.add_edge(x, y)
 
-    def get_node(self, n):
-        """
-        Returns the instance of the specified
-        node ID. If the node does not exist,
-        returns None.
-        """
+g.add_edge(3, 0)
 
-        if n in self.vertlist:
-            return self.vertList[n]
-        else:
-            return None
-
-    def __contains__(self, n):
-        return n in self.node_dict
-
-    def add_edge(self, a, b, weight=round(random(), 2)):
-        """
-        Adds an undirected edge of a specified
-        weight between node IDs a and b. If a
-        or b does not exist, they will be initialed
-        prior to edge placement. Networks abide by
-        a backward directed connectivity scheme.
-        """
-
-        t=type(a)
-
-        if a < b:
-            print 'connection should be directed backward, not forward'
-            self.add_edge(b, a, weight)
-
-        if a not in self.node_dict:
-            if t == InputNode:
-                self.add_input_node(a)
-            elif t == HiddenNode:
-                self.add_hidden_node(a)
-            elif t == OutputNode:
-                self.add_output_node(a)
-            else:
-                raise TypeError
-        if b not in self.node_dict:
-            if t == InputNode:
-                self.add_input_node(a)
-            elif t == HiddenNode:
-                self.add_hidden_node(a)
-            elif t == OutputNode:
-                self.add_output_node(a)
-            else:
-                raise TypeError
-
-        self.node_dict[a].add_connection(self.node_dict[b], weight)
-
-    def get_nodes(self):
-        """
-        Returns a list of all node IDs that
-        exist in the graph.
-        """
-        return self.node_dict.keys()
-
-    def __iter__(self):
-        return iter(self.node_dict.values())
-'''
+backProp_test(inputs, hidden, output, target, MAX)

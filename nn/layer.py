@@ -77,6 +77,9 @@ class InputLayer(Layer):
         # Initiate layer's node count
         self.numNode = 0
 
+    def update_nodes(self, inputs):
+        [self.add_input_node(i_val) for i_val in inputs]
+
     def add_input_node(self, key, i_val=0.):
         """
         Adds an input node with no initial
@@ -106,6 +109,11 @@ class HiddenLayer(Layer):
         newNode = HiddenNode(key)
         self.node_dict[key] = newNode
 
+    def run_layer(self):
+        for idx, node in enumerate(self.node_dict.values()):
+            for weight in node.get_connections():
+                node.update_weight(weight, node.delta_i, alpha)
+
 class OutputLayer(Layer):
     def __init__(self, num=0):
         # Set layer key
@@ -125,4 +133,9 @@ class OutputLayer(Layer):
         self.numNode = self.numNode + 1
         newNode = OutputNode(key)
         self.node_dict[key] = newNode
+
+    def run_layer(self):
+        for idx, node in enumerate(self.node_dict.values()):
+            for weight in node.get_connections():
+                node.update_weight(weight, node.delta_i, alpha)
 
