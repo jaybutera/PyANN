@@ -1,6 +1,26 @@
-from node import *
+from layer import *
 
 class Graph:
+    def __init__(self):
+        self.layer_dict = {}
+        self.num_layer = 0
+
+    def add_input_layer(self, num):
+        self.num_layer += 1
+        new_layer = InputLayer(num)
+        self.layer_dict[new_layer.key] = new_layer
+
+    def add_hidden_layer(self, num):
+        self.num_layer += 1
+        new_layer = HiddenLayer(num)
+        self.layer_dict[new_layer.key] = new_layer
+
+    def add_output_layer(self, num):
+        self.num_layer += 1
+        new_layer = OutputLayer(num)
+        self.layer_dict[new_layer.key] = new_layer
+
+'''
     def __init__(self):
         self.node_dict = {}
         self.numNode = 0
@@ -95,4 +115,4 @@ class Graph:
 
     def __iter__(self):
         return iter(self.node_dict.values())
-
+'''
