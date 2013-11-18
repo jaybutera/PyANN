@@ -23,7 +23,7 @@ class Layer:
     def __iter__(self):
         return iter(self.node_dict.values())
 
-    def add_edge(self, a, b, weight=round(random(), 2)):
+    def add_edge(self, (a, b), weight=round(random(), 2)):
         """
         Adds an undirected edge of a specified
         weight between node IDs a and b. If a
@@ -59,6 +59,9 @@ class Layer:
 
         self.node_dict[a].add_connection(self.node_dict[b], weight)
 
+    def add_edges(self, edges):
+        [g.add_edge((x, y)) for (x, y) in edges]
+
     def get_nodes(self):
         """
         Returns a list of all node IDs that
@@ -88,6 +91,9 @@ class InputLayer(Layer):
         self.numNode = self.numNode + 1
         newNode = InputNode(key, i_val)
         self.node_dict[key] = newNode
+
+    def get_outputs(self):
+        return [node.val for node in node.dict.keys()]
 
 class HiddenLayer(Layer):
     def __init__(self, num=0):
@@ -135,7 +141,7 @@ class OutputLayer(Layer):
         self.node_dict[key] = newNode
 
     def run_layer(self):
-        for idx, node in enumerate(self.node_dict.values()):
-            for weight in node.get_connections():
-                node.update_weight(weight, node.delta_i, alpha)
+        for idx, output_weight in enumerate(output.get_connections()):
+            output.delta_i = output.get_change(ind[0])
+            output.update_weight(output_weight, ind[0], alpha)
 

@@ -1,5 +1,4 @@
-from graph import *
-from node import * # Eventually only interface to nodes through graph
+from layer import *
 import matplotlib.pyplot as plt
 from random import random
 from fileToMatrix import get_data
@@ -19,31 +18,15 @@ def backProp_test(inputs, hidden = None, output, target, MAX):
         for ind in target:
             # Update input nodes
             update_nodes(ind[:-1])
-            # Calculate and modify output layer values
-            for layer in hidden:
 
-    '''
-    for i in range(MAX):
-        # Iterate through all training set points in target
-        outputs = []
-        for ind in target:
-            # Update input nodes
-            inputs.val = ind[0]
             # Calculate and modify output layer values
-            for idx, output_weight in enumerate(output.get_connections()):
-                output.delta_i = output.get_change(ind[0])
-                output.update_weight(output_weight, ind[0], alpha)
-
+            output.run_layer()
             # Calculate and modify hidden layer values
-            for idx, hidden_node in enumerate(hidden):
-                for inputWeight in hidden_node.get_connections():
-                    hidden_node.update_weight(inputWeight,
-                            hidden_node.delta_i, alpha)
+            for layer in hidden:
+                layer.run_layer()
 
-            # Accumulate output node values of every cycle
-            outputs.append(output.activate())
+            outputs.append(o)
 
-    '''
     # Plot information
     plt.figure(0)
     plt.clf()
