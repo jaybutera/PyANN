@@ -3,13 +3,16 @@ import matplotlib.pyplot as plt
 from random import random
 from fileToMatrix import get_data
 
-def backProp_test(inputs, hidden = None, output, target, MAX):
+# Change parameters to just input graph object (g) instead of each layer.
+# Then just pull layers from g.layer_dict[] when needed.
+def backProp_test(inputs, output, target, hidden = None, MAX = 100):
     """
-    Tests the back propagation algorithm with an arbitrary data set
+    Tests the back propagation algorithm with an arbitrary data set.
+    Default at 100 epochs.
     """
 
     x_target = [point[0] for point in target]
-    y_target = [i[0] for i in target]
+    y_target = [i[1] for i in target]
     alpha = (max(x_target) - min(x_target))/len(target)
 
     # Perform backpropagation through MAX epochs

@@ -1,6 +1,6 @@
 from node import *
 
-class Layer:
+class Layer(object):
     key = 0
     def __init__(self, num):
         raise NotImplementedError
@@ -72,11 +72,12 @@ class Layer:
 class InputLayer(Layer):
     def __init__(self, num=0):
         # Set layer key
-        self.key = Test.key
-        Test.key += 1
+        self.key = Layer.key
+        Layer.key += 1
         # Initialize node list in layer
         self.node_dict = {}
-        [add_input_node(i) for i in range(self.key, self.key+num)]
+        # Initialize layer nodes
+        [self.add_input_node(i) for i in range(self.key, self.key+num)]
         # Initiate layer's node count
         self.numNode = 0
 
@@ -98,11 +99,11 @@ class InputLayer(Layer):
 class HiddenLayer(Layer):
     def __init__(self, num=0):
         # Set layer key
-        self.key = Test.key
-        Test.key += 1
+        self.key = Layer.key
+        Layer.key += 1
         # Initialize node list in layer
         self.node_dict = {}
-        [add_hidden_node(i) for i in range(self.key, self.key+num)]
+        [self.add_hidden_node(i) for i in range(self.key, self.key+num)]
         # Initiate layer's node count
         self.numNode = 0
 
@@ -123,11 +124,11 @@ class HiddenLayer(Layer):
 class OutputLayer(Layer):
     def __init__(self, num=0):
         # Set layer key
-        self.key = Test.key
-        Test.key += 1
+        self.key = Layer.key
+        Layer.key += 1
         # Initialize node list in layer
         self.node_dict = {}
-        [add_output_node(i) for i in range(self.key, self.key+num)]
+        [self.add_output_node(i) for i in range(self.key, self.key+num)]
         # Initiate layer's node count
         self.numNode = 0
 

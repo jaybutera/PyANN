@@ -30,17 +30,19 @@ target = [(x,0) for x in range(-50,50)]
 MAX = 1
 
 inputs = g.add_input_layer(1)
-#hidden = [g.add_hidden_node(i) for i in range(1, 3)]
+#hidden = g.add_hidden_layer(2)
 output = g.add_output_node(1)
 
 # To hidden
-#for x, y in ((1,0), (2,0)):
-#    g.add_edge(x,y)
+'''
+for x, y in ((1,0), (2,0)):
+    g.add_edge(x,y)
 
 # To output
-#for x, y in ((3, 1), (3, 2)):
-#    g.add_edge(x, y)
+for x, y in ((3, 1), (3, 2)):
+    g.add_edge(x, y)
+'''
 
 output.add_edge(3, 0)
 
-backProp_test(inputs, hidden=None, output, target, MAX)
+backProp_test(inputs, output, target, MAX)
