@@ -23,7 +23,7 @@ class Layer(object):
     def __iter__(self):
         return iter(self.node_dict.values())
 
-    def add_edge(self, (a, b), weight=round(random(), 2)):
+    def add_edge(self, a, b, weight=round(random(), 2)):
         """
         Adds an undirected edge of a specified
         weight between node IDs a and b. If a
@@ -36,6 +36,7 @@ class Layer(object):
             print 'connection should be directed backward, not forward'
             self.add_edge(b, a, weight)
 
+        '''
         if a not in self.node_dict:
             t = type(a)
             if t == InputNode:
@@ -56,7 +57,9 @@ class Layer(object):
                 self.add_output_node(a)
             else:
                 raise TypeError
+        '''
 
+        print 'node_dict[a]', self.node_dict[a]
         self.node_dict[a].add_connection(self.node_dict[b], weight)
 
     def add_edges(self, edges):
@@ -73,8 +76,9 @@ class Layer(object):
 class InputLayer(Layer):
     def __init__(self, num=0):
         # Initiate layer's node count
-        self.numNode = 0
+        self.numNode = num
         # Set layer key
+        print 'Layer.key: ', Layer.key
         self.key = Layer.key
         Layer.key += 1
         # Initialize node list in layer
@@ -97,11 +101,15 @@ class InputLayer(Layer):
     def get_outputs(self):
         return [node.val for node in node.dict.keys()]
 
+    def get_nodes(self):
+        return [node for node in self.node_dict.keys()]
+
 class HiddenLayer(Layer):
     def __init__(self, num=0):
         # Initiate layer's node count
-        self.numNode = 0
+        self.numNode = num
         # Set layer key
+        print 'Layer.key: ', Layer.key
         self.key = Layer.key
         Layer.key += 1
         # Initialize node list in layer
@@ -122,16 +130,21 @@ class HiddenLayer(Layer):
             for weight in node.get_connections():
                 node.update_weight(weight, node.delta_i, alpha)
 
+    def get_nodes(self):
+        return [node for node in self.node_dict.keys()]
+
 class OutputLayer(Layer):
     def __init__(self, num=0):
         # Initiate layer's node count
-        self.numNode = 0
+        self.numNode = num
         # Set layer key
+        print 'Layer.key: ', Layer.key
         self.key = Layer.key
         Layer.key += 1
         # Initialize node list in layer
         self.node_dict = {}
-        [self.add_output_node(i) for i in range(self.key, self.key+num)]
+        #[self.add_output_node(i) for i in range(self.key, self.key+num)]
+        self.add_output_node(3)
 
     def add_output_node(self, key):
         """
@@ -146,4 +159,7 @@ class OutputLayer(Layer):
         for idx, output_weight in enumerate(output.get_connections()):
             output.delta_i = output.get_change(ind[0])
             output.update_weight(output_weight, ind[0], alpha)
+
+    def get_nodes(self):
+        return [node for node in self.node_dict.keys()]
 
