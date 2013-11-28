@@ -69,8 +69,11 @@ class Layer(object):
         """
         return self.node_dict.keys()
 
+# Write doctests
 class InputLayer(Layer):
     def __init__(self, num=0):
+        # Initiate layer's node count
+        self.numNode = 0
         # Set layer key
         self.key = Layer.key
         Layer.key += 1
@@ -78,8 +81,6 @@ class InputLayer(Layer):
         self.node_dict = {}
         # Initialize layer nodes
         [self.add_input_node(i) for i in range(self.key, self.key+num)]
-        # Initiate layer's node count
-        self.numNode = 0
 
     def update_nodes(self, inputs):
         [self.add_input_node(i_val) for i_val in inputs]
@@ -98,14 +99,14 @@ class InputLayer(Layer):
 
 class HiddenLayer(Layer):
     def __init__(self, num=0):
+        # Initiate layer's node count
+        self.numNode = 0
         # Set layer key
         self.key = Layer.key
         Layer.key += 1
         # Initialize node list in layer
         self.node_dict = {}
         [self.add_hidden_node(i) for i in range(self.key, self.key+num)]
-        # Initiate layer's node count
-        self.numNode = 0
 
     def add_hidden_node(self, key):
         """
@@ -123,14 +124,14 @@ class HiddenLayer(Layer):
 
 class OutputLayer(Layer):
     def __init__(self, num=0):
+        # Initiate layer's node count
+        self.numNode = 0
         # Set layer key
         self.key = Layer.key
         Layer.key += 1
         # Initialize node list in layer
         self.node_dict = {}
         [self.add_output_node(i) for i in range(self.key, self.key+num)]
-        # Initiate layer's node count
-        self.numNode = 0
 
     def add_output_node(self, key):
         """

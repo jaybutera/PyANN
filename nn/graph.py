@@ -31,7 +31,7 @@ MAX = 1
 
 inputs = g.add_input_layer(1)
 #hidden = g.add_hidden_layer(2)
-output = g.add_output_node(1)
+output = g.add_output_layer(1)
 
 # To hidden
 '''
